@@ -14,3 +14,7 @@
 //Need an array, counter, and boolean 
 //4 functions, api call, next and prev btns, filter data
 //4 click events
+
+
+//Fetch link:
+//https://random-data-api.com/api/v2/users
