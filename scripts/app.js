@@ -10,7 +10,7 @@
 //ID for input field
 
 //Keep in mind
-//Use .target, .map, .filter, .append, .createElement, .push
+//Use .target, .map, .filter, .append, .createElement, .push, .value
 //Need an array, counter, and boolean 
 //4 functions, api call, next and prev btns, filter data
 //4 click events
