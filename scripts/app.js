@@ -27,18 +27,60 @@ let dataBtn = document.getElementById("dataBtn");
 let userInput = document.getElementById("userInput");
 let infoDiv = document.getElementById("infoDiv");
 
+let dataArray = [];
+let counter = 0;
+let start = true;
+
 
 const ApiData = async () => {
     const promise = await fetch('https://random-data-api.com/api/v2/users');
     const data = await promise.json();
-    userName.textContent = data.first_name + " " + data.last_name;  
+    dataArray.push(data);
+    userName.textContent = dataArray[0].first_name + " " + dataArray[0].last_name;
 }
 
-dataBtn.addEventListener('click', (event) => {
-    console.log("working");
+dataBtn.addEventListener('click', async (event) => {
+    if (start) {
+        for (let i = 0; i < 15; i++) {
+            ApiData();
+        }
+    }
+    start = false;
+
+    createNext();
+    createPrev();
+
+    
+})
+
+const createNext = () => {
     let nextBtn = document.createElement("button");
     nextBtn.textContent = "Next";
     nextBtn.addEventListener('click', (event) => {
-
+        counter++;
+        if(counter > dataArray.length + 1)
+        {
+            counter = 0;
+        }
+        userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
+        
     })
-})
+
+    btnDiv.appendChild(nextBtn);
+}
+
+const createPrev = () => {
+    let prevBtn = document.createElement("button");
+    prevBtn.textContent = "Prev";
+    prevBtn.addEventListener('click', (event) => {
+        counter--;
+        if(counter < 0)
+        {
+            counter = 0;
+        }
+        userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
+        
+    })
+
+    btnDiv.appendChild(prevBtn);
+}
