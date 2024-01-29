@@ -18,3 +18,10 @@
 
 //Fetch link:
 //https://random-data-api.com/api/v2/users
+
+
+const ApiData = async () => {
+    const promise = await fetch('https://random-data-api.com/api/v2/users');
+    const data = await promise.json();
+    
+}
