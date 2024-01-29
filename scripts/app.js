@@ -8,12 +8,15 @@
 //User name ID
 //ID for fetch data btn
 //ID for input field
+//An array, counter, boolean for api call
+
 
 //Keep in mind
 //Use .target, .map, .filter, .append, .createElement, .push, .value
 //Need an array, counter, and boolean 
 //4 functions, api call, next and prev btns, filter data
 //4 click events
+
 
 
 //Fetch link:
@@ -32,7 +35,6 @@ const ApiData = async () => {
 }
 
 dataBtn.addEventListener('click', (event) => {
-    ApiData();
     console.log("working");
     let nextBtn = document.createElement("button");
     nextBtn.textContent = "Next";
