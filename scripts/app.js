@@ -18,6 +18,10 @@
 
 //Fetch link:
 //https://random-data-api.com/api/v2/users
+let userName = document.getElementById("userName");
+let btnDiv = document.getElementById("btnDiv");
+let dataBtn = document.getElementById("dataBtn");
+let userInput = document.getElementById("userInput");
 
 
 const ApiData = async () => {
