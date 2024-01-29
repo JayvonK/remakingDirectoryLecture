@@ -36,7 +36,7 @@ const ApiData = async () => {
     const promise = await fetch('https://random-data-api.com/api/v2/users');
     const data = await promise.json();
     dataArray.push(data);
-    userName.textContent = dataArray[0].first_name + " " + dataArray[0].last_name;
+    userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
 }
 
 dataBtn.addEventListener('click', async (event) => {
@@ -58,12 +58,11 @@ const createNext = () => {
     nextBtn.textContent = "Next";
     nextBtn.addEventListener('click', (event) => {
         counter++;
-        if(counter > dataArray.length + 1)
+        if(counter > dataArray.length - 1)
         {
             counter = 0;
         }
         userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
-        
     })
 
     btnDiv.appendChild(nextBtn);
@@ -76,7 +75,7 @@ const createPrev = () => {
         counter--;
         if(counter < 0)
         {
-            counter = 0;
+            counter = dataArray.length - 1;
         }
         userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
         
