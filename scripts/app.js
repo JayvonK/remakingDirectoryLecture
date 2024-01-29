@@ -83,3 +83,31 @@ const createPrev = () => {
 
     btnDiv.appendChild(prevBtn);
 }
+
+userInput.addEventListener('keydown', (event) => {
+    if(event.key === "Enter")
+    {
+        filterData(event.target.value);
+    }
+})
+
+const filterData = (key) => {
+    let filteredData = dataArray.filter(user => user.subscription.status === key);
+    if(filteredData.length === 0)
+    {
+        infoDiv.innerHTML = "";
+        infoDiv.textContent = "No user's found :(";
+    }else {
+        infoDiv.innerHTML = "";
+        filterData.map(user => {
+            const p = document.createElement("p");
+            p.textContent = user.username;;
+
+            p.addEventListener('click', (event) => {
+                p.remove();
+            })
+
+            infoDiv.appendChild(p);
+        })
+    }
+}
