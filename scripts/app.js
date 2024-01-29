@@ -22,10 +22,21 @@ let userName = document.getElementById("userName");
 let btnDiv = document.getElementById("btnDiv");
 let dataBtn = document.getElementById("dataBtn");
 let userInput = document.getElementById("userInput");
+let infoDiv = document.getElementById("infoDiv");
 
 
 const ApiData = async () => {
     const promise = await fetch('https://random-data-api.com/api/v2/users');
     const data = await promise.json();
-    
+    userName.textContent = data.first_name + " " + data.last_name;  
 }
+
+dataBtn.addEventListener('click', (event) => {
+    ApiData();
+    console.log("working");
+    let nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next";
+    nextBtn.addEventListener('click', (event) => {
+
+    })
+})
