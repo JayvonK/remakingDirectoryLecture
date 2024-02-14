@@ -26,88 +26,80 @@ let btnDiv = document.getElementById("btnDiv");
 let dataBtn = document.getElementById("dataBtn");
 let userInput = document.getElementById("userInput");
 let infoDiv = document.getElementById("infoDiv");
-
-let dataArray = [];
-let counter = 0;
+let arr = [];
+let count = 0;
 let start = true;
 
-
-const ApiData = async () => {
+const GetUser = async () => {
     const promise = await fetch('https://random-data-api.com/api/v2/users');
     const data = await promise.json();
-    dataArray.push(data);
-    userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
+    console.log(data);
+    return data;
 }
+//first_name
+//last_name
+//subscription.status
 
-dataBtn.addEventListener('click', async (event) => {
+dataBtn.addEventListener('click', async () => {
     if (start) {
         for (let i = 0; i < 15; i++) {
-            ApiData();
+            arr.push(await GetUser())
         }
+        CreatePrev();
+        CreateNext();
+        userName.textContent = arr[count].first_name + " " + arr[count].last_name;
     }
+
     start = false;
-
-    createNext();
-    createPrev();
-
-    
 })
 
-const createNext = () => {
-    let nextBtn = document.createElement("button");
-    nextBtn.textContent = "Next";
-    nextBtn.addEventListener('click', (event) => {
-        counter++;
-        if(counter > dataArray.length - 1)
-        {
-            counter = 0;
+const CreatePrev = () => {
+    let button = document.createElement("button");
+    button.textContent = "Prev";
+
+    button.addEventListener('click', () => {
+        count--;
+        if (count < 0) {
+            count = arr.length - 1;
         }
-        userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
+        userName.textContent = arr[count].first_name + " " + arr[count].last_name;
     })
 
-    btnDiv.appendChild(nextBtn);
+    btnDiv.append(button);
 }
 
-const createPrev = () => {
-    let prevBtn = document.createElement("button");
-    prevBtn.textContent = "Prev";
-    prevBtn.addEventListener('click', (event) => {
-        counter--;
-        if(counter < 0)
-        {
-            counter = dataArray.length - 1;
+const CreateNext = () => {
+    let button = document.createElement("button");
+    button.textContent = "Next";
+
+    button.addEventListener('click', () => {
+        count++;
+        if (count > arr.length - 1) {
+            count = 0;
         }
-        userName.textContent = dataArray[counter].first_name + " " + dataArray[counter].last_name;
-        
+        userName.textContent = arr[count].first_name + " " + arr[count].last_name;
     })
 
-    btnDiv.appendChild(prevBtn);
+    btnDiv.append(button);
 }
 
-userInput.addEventListener('keydown', (event) => {
-    if(event.key === "Enter")
-    {
-        filterData(event.target.value);
-    }
-})
-
-const filterData = (key) => {
-    let filteredData = dataArray.filter(user => user.subscription.status === key);
-    if(filteredData.length === 0)
-    {
+userInput.addEventListener('keydown', (e) => {
+    if(e.key === "Enter"){
         infoDiv.innerHTML = "";
-        infoDiv.textContent = "No user's found :(";
-    }else {
-        infoDiv.innerHTML = "";
-        filterData.map(user => {
-            const p = document.createElement("p");
-            p.textContent = user.username;;
+        let newArr = arr.filter(sub => sub.subscription.status === e.target.value)
+        if(newArr.length === 0){
+            infoDiv.innerText = "No one found";
+        } else {
+            newArr.map(user => {
+                let p = document.createElement("p");
+                p.textContent = user.first_name + " " + user.last_name;
 
-            p.addEventListener('click', (event) => {
-                p.remove();
+                p.addEventListener('click', () => {
+                    p.remove();
+                })
+
+                infoDiv.append(p);
             })
-
-            infoDiv.appendChild(p);
-        })
+        }
     }
-}
+})
